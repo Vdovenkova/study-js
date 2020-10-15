@@ -13,11 +13,17 @@ let money,
   period = 12,
   expenses = [];
 
+// let start = function() {
+//   money = prompt("Ваш месячный доход:");
+//   while (!isNumber(money)) {
+//     money = prompt("Ваш месячный доход:");
+//   }
+// };
 let start = function() {
-  money = prompt("Ваш месячный доход:");
-  while (!isNumber(money)) {
+  do{
     money = prompt("Ваш месячный доход:");
   }
+  while (!isNumber(money));
 };
 start();
 
