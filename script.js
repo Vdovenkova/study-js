@@ -7,10 +7,7 @@ let money = +prompt("Ведите сумму Вашего месячного д�
   deposit = confirm(`Есть ли у вас депозит в банке?`),
   mission = 110000,
   period = 12,
-  expense01 = prompt("Введите первую обязательную статью расходов:"),
-  amount01 = +prompt("Во сколько это обойдется - в месяц?"),
-  expense02 = prompt("Введите вторую обязательную статью расходов:"),
-  amount02 = +prompt("Во сколько это обойдется - в месяц?");
+  expense01, expense02;
 
 addExpenses = addExpenses.toLowerCase();
 
@@ -22,10 +19,19 @@ showTypeOf(income);
 showTypeOf(deposit);
 
 // сумма расходов за месяц
-function getExpensesMonth(a, b){
-  return (a + b);
+function getExpensesMonth(){
+  let sum = 0;
+  for (let i = 0; i < 2; i++) {
+      if (i === 0 ) {
+        expense01 = prompt("Введите первую обязательную статью расходов:");
+      } else if (i === 1) {
+        expense02 = prompt("Введите вторую обязательную статью расходов:");
+      }
+    sum += +prompt('Во сколько это обойдется - в месяц?');
+  } 
+  return sum;
 }
-let expensesMonth = getExpensesMonth(amount01, amount02);
+let expensesMonth = getExpensesMonth();
 
 // накопления за месяц функцией доход минус сумма расходов 
 function getAccumulatedMonth(c, d){
