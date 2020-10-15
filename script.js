@@ -39,9 +39,9 @@ showTypeOf(deposit);
 // сумма расходов за месяц
 function getExpensesMonth(){
   let sum = 0;
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 2; i++) {
     expenses[i] = prompt("Введите обязательную статью расходов:");
-    sum += +prompt('Во сколько это обойдется - в месяц?');
+    sum += +prompt('Во сколько это обойдется?');
   } 
   return sum;
 }
@@ -55,12 +55,16 @@ let accumulatedMonth = getAccumulatedMonth(money, expensesMonth),
   budgetDay = Math.floor(accumulatedMonth / 30);
 
 // за сколько месяцев будет накоплена сумма в переменной mission
-function getTargetMonth(m, n){
-  return (m / n);
+function getTargetMonth(){
+  let targetMonth = 0;
+  targetMonth = mission / accumulatedMonth;
+  if (targetMonth < 0) {
+    return ('Что цель не будет достигнута');
+  } else {
+    return (`Цель будет достигнута за ${Math.ceil(targetMonth)} месяцев`);
+  }
 }
-let targetMonth = getTargetMonth(mission, accumulatedMonth);
 
-// пока уберу, будут другие переменные
 let getStatusIncom = function(){
   if (budgetDay < 0) {
     return ('Что то пошло не так');
@@ -79,5 +83,6 @@ console.log("Возможные расходы ", addExpenses.split(","));
 console.log("Обязательные расходы ", expenses);
 console.log("Сумма расходов за месяц:", expensesMonth);
 console.log(`Бюджет на день: ${budgetDay}`);
-console.log(`Цель будет достигнута за ${Math.ceil(targetMonth)} месяцев`);
+// console.log(`Цель будет достигнута за ${Math.ceil(targetMonth)} месяцев`);
+console.log(getTargetMonth());
 console.log(getStatusIncom());
