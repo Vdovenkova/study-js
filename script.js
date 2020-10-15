@@ -1,6 +1,6 @@
 "use strict";
 
-let money = +prompt("Ведите сумму Вашего месячного дохода:"),
+let money,
   income = "фриланс",
   addExpenses = prompt(`Перечислите возможные расходы
   за рассчитываемый период через запятую`),
@@ -8,6 +8,14 @@ let money = +prompt("Ведите сумму Вашего месячного д�
   mission = 110000,
   period = 12,
   expenses = [];
+
+let start = function() {
+  money = prompt("Ваш месячный доход:");
+  while (isNaN(parseFloat(money))) {
+    money = prompt("Ваш месячный доход:");
+  }
+};
+start();
 
 addExpenses = addExpenses.toLowerCase();
 
