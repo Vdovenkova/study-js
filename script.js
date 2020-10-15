@@ -11,14 +11,8 @@ let money,
   deposit = confirm(`Есть ли у вас депозит в банке?`),
   mission = 110000,
   period = 12,
-  expenses = [];
+  expenseAmount, expense01, expense02;
 
-// let start = function() {
-//   money = prompt("Ваш месячный доход:");
-//   while (!isNumber(money)) {
-//     money = prompt("Ваш месячный доход:");
-//   }
-// };
 let start = function() {
   do{
     money = prompt("Ваш месячный доход:");
@@ -40,9 +34,18 @@ showTypeOf(deposit);
 function getExpensesMonth(){
   let sum = 0;
   for (let i = 0; i < 2; i++) {
-    expenses[i] = prompt("Введите обязательную статью расходов:");
-    sum += +prompt('Во сколько это обойдется?');
-  } 
+    if (i === 0) {
+      expense01 = prompt("Введите обязательную статью расходов:");
+    } else if (i === 1) {
+      expense02 = prompt("Введите обязательную статью расходов:");
+    }
+    do {
+      expenseAmount = prompt('Во сколько это обойдется?');
+    }
+    while(!isNumber(expenseAmount));
+    expenseAmount = Number(expenseAmount);
+    sum += expenseAmount;
+  }
   return sum;
 }
 let expensesMonth = getExpensesMonth();
@@ -59,7 +62,7 @@ function getTargetMonth(){
   let targetMonth = 0;
   targetMonth = mission / accumulatedMonth;
   if (targetMonth < 0) {
-    return ('Что цель не будет достигнута');
+    return ('Цель не будет достигнута');
   } else {
     return (`Цель будет достигнута за ${Math.ceil(targetMonth)} месяцев`);
   }
@@ -80,9 +83,7 @@ let getStatusIncom = function(){
 // выводы в консоль
 console.log(`Цель заработать ${mission} рублей`);
 console.log("Возможные расходы ", addExpenses.split(","));
-console.log("Обязательные расходы ", expenses);
 console.log("Сумма расходов за месяц:", expensesMonth);
 console.log(`Бюджет на день: ${budgetDay}`);
-// console.log(`Цель будет достигнута за ${Math.ceil(targetMonth)} месяцев`);
 console.log(getTargetMonth());
 console.log(getStatusIncom());
