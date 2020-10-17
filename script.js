@@ -32,6 +32,15 @@ let appData = {
   за рассчитываемый период через запятую`);
         appData.addExpenses = addExpenses.toLowerCase().split(",");
         appData.deposit = confirm(`Есть ли у вас депозит в банке?`);
+    // for (let i = 0; i < 2; i++) {
+    //   let expenseName, expenseAmount;
+    //     expenseName = prompt("Введите обязательную статью расходов:");
+    //   do {
+    //     expenseAmount = prompt('Во сколько это обойдется?');
+    //   }
+    //   while(!isNumber(expenseAmount));
+    //   appData.expenses[expenseName] = +expenseAmount;
+    // }
   },
   // сумма расходов за месяц
   getExpensesMonth: function(){
@@ -46,12 +55,10 @@ let appData = {
         expenseAmount = prompt('Во сколько это обойдется?');
       }
       while(!isNumber(expenseAmount));
-    // expenseAmount = Number(expenseAmount);
     appData.expensesMonth += +expenseAmount;
     }
     return appData.expensesMonth;
   },
-  // накопления за месяц функцией доход минус сумма расходов 
   getBudget: function(){
     appData.budgetMonth = (appData.budget - appData.expensesMonth);
     appData.budgetDay = Math.floor(appData.budgetMonth / 30);
