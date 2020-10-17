@@ -32,37 +32,26 @@ let appData = {
   за рассчитываемый период через запятую`);
         appData.addExpenses = addExpenses.toLowerCase().split(",");
         appData.deposit = confirm(`Есть ли у вас депозит в банке?`);
-    // for (let i = 0; i < 2; i++) {
-    //   let expenseName, expenseAmount;
-    //     expenseName = prompt("Введите обязательную статью расходов:");
-    //   do {
-    //     expenseAmount = prompt('Во сколько это обойдется?');
-    //   }
-    //   while(!isNumber(expenseAmount));
-    //   appData.expenses[expenseName] = +expenseAmount;
-    // }
-  },
-  // сумма расходов за месяц
-  getExpensesMonth: function(){
-    let expense01, expense02, expenseAmount;
     for (let i = 0; i < 2; i++) {
-      if (i === 0) {
-        expense01 = prompt("Введите обязательную статью расходов:");
-      } else if (i === 1) {
-        expense02 = prompt("Введите обязательную статью расходов:");
-      }
+      let expenseName, expenseAmount;
+        expenseName = prompt("Введите обязательную статью расходов:");
       do {
         expenseAmount = prompt('Во сколько это обойдется?');
       }
       while(!isNumber(expenseAmount));
-    appData.expensesMonth += +expenseAmount;
+      appData.expenses[expenseName] = +expenseAmount;
+    }
+  },
+  // сумма расходов за месяц
+  getExpensesMonth: function(){
+    for (let key in appData.expenses) {
+      appData.expensesMonth += appData.expenses[key];
     }
     return appData.expensesMonth;
   },
   getBudget: function(){
     appData.budgetMonth = (appData.budget - appData.expensesMonth);
     appData.budgetDay = Math.floor(appData.budgetMonth / 30);
-    // return appData.budgetMonth;
   },
   // за сколько месяцев будет накоплена сумма в переменной mission
   getTargetMonth: function (){
@@ -93,6 +82,7 @@ appData.getBudget();
 // выводы в консоль
 console.log(`Цель заработать ${appData.mission} рублей`);
 console.log("Возможные расходы ", appData.addExpenses);
+console.log("Расходы за месяц:", appData.expenses);
 console.log("Сумма расходов за месяц:", appData.expensesMonth);
 console.log(`Бюджет на день: ${appData.budgetDay}`);
 console.log(appData.getTargetMonth());
