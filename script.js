@@ -28,13 +28,12 @@ let appData = {
   budgetMonth: 0,
   expensesMonth: 0,
   asking: function(){
-    let addExpenses = prompt(`Перечислите возможные расходы
-  за рассчитываемый период через запятую`);
+    let addExpenses = prompt("Перечислите возможные расходы за месяц через запятую");
         appData.addExpenses = addExpenses.toLowerCase().split(",");
         appData.deposit = confirm(`Есть ли у вас депозит в банке?`);
     for (let i = 0; i < 2; i++) {
       let expenseName, expenseAmount;
-        expenseName = prompt("Введите обязательную статью расходов:");
+      expenseName = prompt("Введите обязательную статью расходов:");
       do {
         expenseAmount = prompt('Во сколько это обойдется?');
       }
@@ -80,18 +79,11 @@ appData.getExpensesMonth();
 appData.getBudget();
 
 // выводы в консоль
-console.log(`Цель заработать ${appData.mission} рублей`);
-console.log("Возможные расходы ", appData.addExpenses);
-console.log("Расходы за месяц:", appData.expenses);
 console.log("Сумма расходов за месяц:", appData.expensesMonth);
-console.log(`Бюджет на день: ${appData.budgetDay}`);
 console.log(appData.getTargetMonth());
 console.log(appData.getStatusIncom());
-
-// была до 7-го урока - вывод в консоль типов данных
-// let showTypeOf = function(item) {
-//   console.log(item, typeof(item));
-// };
-// showTypeOf(money);
-// showTypeOf(appData.income);
-// showTypeOf(appData.deposit);
+for (let key in appData) {
+  if (typeof(appData[key]) !== 'function') {
+    console.log("Наша программа включает в себя данные: " + "свойство: " + key + " значение: " + (appData[key]));
+  }
+}
