@@ -16,8 +16,10 @@ start();
 let appData = {
   income: {},
   addIncome: [],
+  // это возможные расходы, которые просты выводились в виде массива
+  addExpenses: [], 
+  // это обязат.раходы-это объект, в котором ключ-название расхода: значение-сумма расхода
   expenses: {},
-  addExpenses: [],
   deposit: false,
   mission: 110000,
   period: 12,
@@ -50,9 +52,10 @@ let appData = {
     return appData.expensesMonth;
   },
   // накопления за месяц функцией доход минус сумма расходов 
-  getAccumulatedMonth: function(){
+  getBudget: function(){
     appData.budgetMonth = (appData.budget - appData.expensesMonth);
-    return appData.budgetMonth;
+    appData.budgetDay = Math.floor(appData.budgetMonth / 30);
+    // return appData.budgetMonth;
   },
   // за сколько месяцев будет накоплена сумма в переменной mission
   getTargetMonth: function (){
@@ -64,7 +67,7 @@ let appData = {
       return (`Цель будет достигнута за ${Math.ceil(targetMonth)} месяцев`);
     }
   },
-    getStatusIncom: function(){
+  getStatusIncom: function(){
     if (appData.budgetDay < 0) {
       return ('Что то пошло не так');
     } else if (appData.budgetDay < 600) {
@@ -78,13 +81,13 @@ let appData = {
 };
 appData.asking();
 appData.getExpensesMonth();
-appData.getAccumulatedMonth();
+appData.getBudget();
 
 // выводы в консоль
 console.log(`Цель заработать ${appData.mission} рублей`);
 console.log("Возможные расходы ", appData.addExpenses);
 console.log("Сумма расходов за месяц:", appData.expensesMonth);
-console.log(`Бюджет на день: ${Math.floor(appData.budgetMonth / 30)}`);
+console.log(`Бюджет на день: ${appData.budgetDay}`);
 console.log(appData.getTargetMonth());
 console.log(appData.getStatusIncom());
 
