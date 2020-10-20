@@ -9,7 +9,7 @@ let money,
       do{
         money = prompt("Ваш месячный доход:");
       }
-      while (!isNumber(money));
+      while (!isNumber(money) || +money === 0);
     };
 start();
 
@@ -31,20 +31,32 @@ let appData = {
   expensesMonth: 0,
   asking: function(){
     if (confirm('У вас есть дополнительный заработок')){
-      let itemIncome = prompt ('Какой у вас дополнительный заработок', 'Вышиваю крестиком');
-      let cashIncome = ('Сколько вы на этом зарабатываете в  месяц?', 1000);
+      let itemIncome, cashIncome;
+      do {
+        itemIncome = prompt ('Какой у вас дополнительный заработок', 'Фриланс');
+      }
+      while(itemIncome === null || itemIncome === '' || isNumber(itemIncome));
+      do {
+        cashIncome = prompt ('Сколько вы на этом зарабатываете в месяц?');
+      }
+      while(!isNumber(cashIncome) || +cashIncome === 0);
       appData.income[itemIncome] = cashIncome;
     }
     appData.deposit = confirm(`Есть ли у вас депозит в банке?`);
+
     let addExpenses = prompt("Перечислите возможные расходы за месяц через запятую");
     appData.addExpenses = addExpenses.toLowerCase().split(",");
+
     for (let i = 0; i < 2; i++) {
       let expenseName, expenseAmount;
-      expenseName = prompt("Введите обязательную статью расходов:");
+      do {
+        expenseName = prompt("Введите обязательную статью расходов:");
+      }
+      while(expenseName === null || expenseName === '' || isNumber(expenseName));
       do {
         expenseAmount = prompt('Во сколько это обойдется?');
       }
-      while(!isNumber(expenseAmount));
+      while(!isNumber(expenseAmount) || +expenseAmount === 0);
       appData.expenses[expenseName] = +expenseAmount;
     }
   },
@@ -82,8 +94,14 @@ let appData = {
   },
   getInfoDeposit: function(){
     if (appData.deposit){
-      appData.moneyDeposit = prompt('Какова сумма депозита?', 1000);
-      appData.percentDeposit = prompt('Каков годовой процент по вкладу?', 10);
+      do {
+        appData.moneyDeposit = prompt('Какова сумма депозита?');
+      }
+      while(!isNumber(appData.moneyDeposit) || +appData.moneyDeposit === 0);
+      do {
+        appData.percentDeposit = prompt('Каков годовой процент по вкладу?', 10);
+      }
+      while(!isNumber(appData.percentDeposit) || +appData.moneyDeposit === 0);
     }
   },
   calcSavedMoney: function(){
