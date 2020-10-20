@@ -16,7 +16,6 @@ start();
 let appData = {
   income: {},
   addIncome: [],
-  // возможные расходы, просто выводились в виде массива
   addExpenses: [], 
   // обязат.раходы-объект, в котором ключ-название расхода, значение-сумма расхода
   expenses: {},
@@ -45,7 +44,7 @@ let appData = {
     appData.deposit = confirm(`Есть ли у вас депозит в банке?`);
 
     let addExpenses = prompt("Перечислите возможные расходы за месяц через запятую");
-    appData.addExpenses = addExpenses.toLowerCase().split(",");
+    appData.addExpenses = addExpenses.split(",");
 
     for (let i = 0; i < 2; i++) {
       let expenseName, expenseAmount;
@@ -111,10 +110,11 @@ let appData = {
 appData.asking();
 appData.getExpensesMonth();
 appData.getBudget();
-appData.getInfoDeposit(); // временно для проверки
+appData.getInfoDeposit();
 
 // выводы в консоль
-console.log(appData.percentDeposit, appData.moneyDeposit, appData.calcSavedMoney());
+// console.log(appData.percentDeposit, appData.moneyDeposit, appData.calcSavedMoney());
+console.log("Возможные расходы ", appData.addExpenses.join(", "));
 console.log("Сумма расходов за месяц:", appData.expensesMonth);
 console.log(appData.getTargetMonth());
 console.log(appData.getStatusIncom());
