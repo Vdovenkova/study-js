@@ -16,11 +16,13 @@ start();
 let appData = {
   income: {},
   addIncome: [],
-  // это возможные расходы, которые просты выводились в виде массива
+  // возможные расходы, просто выводились в виде массива
   addExpenses: [], 
-  // это обязат.раходы-это объект, в котором ключ-название расхода: значение-сумма расхода
+  // обязат.раходы-объект, в котором ключ-название расхода, значение-сумма расхода
   expenses: {},
   deposit: false,
+  percentDeposit: 0,
+  moneyDeposit: 0,
   mission: 110000,
   period: 12,
   budget: money,
@@ -28,9 +30,14 @@ let appData = {
   budgetMonth: 0,
   expensesMonth: 0,
   asking: function(){
+    if (confirm('У вас есть дополнительный заработок')){
+      let itemIncome = prompt ('Какой у вас дополнительный заработок', 'Вышиваю крестиком');
+      let cashIncome = ('Сколько вы на этом зарабатываете в  месяц?', 1000);
+      appData.income[itemIncome] = cashIncome;
+    }
+    appData.deposit = confirm(`Есть ли у вас депозит в банке?`);
     let addExpenses = prompt("Перечислите возможные расходы за месяц через запятую");
-        appData.addExpenses = addExpenses.toLowerCase().split(",");
-        appData.deposit = confirm(`Есть ли у вас депозит в банке?`);
+    appData.addExpenses = addExpenses.toLowerCase().split(",");
     for (let i = 0; i < 2; i++) {
       let expenseName, expenseAmount;
       expenseName = prompt("Введите обязательную статью расходов:");
@@ -73,12 +80,23 @@ let appData = {
       return ('У вас высокий уровень дохода');
     }
   },
+  getInfoDeposit: function(){
+    if (appData.deposit){
+      appData.moneyDeposit = prompt('Какова сумма депозита?', 1000);
+      appData.percentDeposit = prompt('Каков годовой процент по вкладу?', 10);
+    }
+  },
+  calcSavedMoney: function(){
+    return appData.budgetMonth * appData.period;
+  }
 };
 appData.asking();
 appData.getExpensesMonth();
 appData.getBudget();
+appData.getInfoDeposit(); // временно для проверки
 
 // выводы в консоль
+console.log(appData.percentDeposit, appData.moneyDeposit, appData.calcSavedMoney());
 console.log("Сумма расходов за месяц:", appData.expensesMonth);
 console.log(appData.getTargetMonth());
 console.log(appData.getStatusIncom());
