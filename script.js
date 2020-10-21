@@ -16,7 +16,8 @@ start();
 let appData = {
   income: {},
   addIncome: [],
-  addExpenses: [], 
+  addExpenses: [],
+  newAddExpenses: [],
   // обязат.раходы-объект, в котором ключ-название расхода, значение-сумма расхода
   expenses: {},
   deposit: false,
@@ -41,10 +42,15 @@ let appData = {
       while(!isNumber(cashIncome) || +cashIncome === 0);
       appData.income[itemIncome] = cashIncome;
     }
+
     appData.deposit = confirm(`Есть ли у вас депозит в банке?`);
 
     let addExpenses = prompt("Перечислите возможные расходы за месяц через запятую");
     appData.addExpenses = addExpenses.split(",");
+    for (let item of appData.addExpenses) {
+      let str = item.trim();
+      appData.newAddExpenses.push(str[0].toUpperCase() + str.slice(1).toLowerCase());
+    }
 
     for (let i = 0; i < 2; i++) {
       let expenseName, expenseAmount;
@@ -74,7 +80,7 @@ let appData = {
   getTargetMonth: function (){
     let targetMonth = 0;
     targetMonth = appData.mission / appData.budgetMonth;
-    if (targetMonth < 0) {
+    if (targetMonth <= 0) {
       return ('Цель не будет достигнута');
     } else {
       return (`Цель будет достигнута за ${Math.ceil(targetMonth)} месяцев`);
@@ -114,7 +120,7 @@ appData.getInfoDeposit();
 
 // выводы в консоль
 // console.log(appData.percentDeposit, appData.moneyDeposit, appData.calcSavedMoney());
-console.log("Возможные расходы ", appData.addExpenses.join(", "));
+console.log("Возможные расходы ", appData.newAddExpenses.join(", "));
 console.log("Сумма расходов за месяц:", appData.expensesMonth);
 console.log(appData.getTargetMonth());
 console.log(appData.getStatusIncom());
