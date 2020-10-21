@@ -1,5 +1,29 @@
 "use strict";
 
+const calculateButton = document.getElementById('start'),
+      btnAddIncome = document.getElementsByTagName('button')[0],
+      btnAddExpenses = document.getElementsByTagName('button')[1],
+      checkmarkDeposit = document.querySelector('#deposit-check'),
+      nameAdditionalIncome1 = document.querySelectorAll('.additional_income-item')[0],
+      nameAdditionalIncome2 = document.querySelectorAll('.additional_income-item')[1],
+      resultBudgetMonth = document.getElementsByClassName('budget_month-value')[0],
+      resultBudgetDay = document.getElementsByClassName('budget_day-value')[0],
+      resultExpensesMonth = document.getElementsByClassName('expenses_month-value')[0],
+      resultAdditionalIncome = document.getElementsByClassName('additional_income-value')[0],
+      resultAdditionalExpenses = document.getElementsByClassName('additional_expenses-value')[0],
+      resultIncomePeriod = document.getElementsByClassName('income_period-value')[0],
+      resultTargetMonth = document.getElementsByClassName('target_month-value')[0],
+      salary = document.querySelector('.salary-amount'),
+      nameIncome = document.querySelector('input.income-title'),
+      sumIncome = document.querySelector('.income-amount'),
+      // здесь
+      nameExpenses = document.querySelector('input.expenses-title'),
+      sumExpenses= document.querySelector('.expenses-amount'),
+      nameAdditionalExpenses= document.querySelector('.additional_expenses-item'),
+      target = document.querySelector('.target-amount'),
+      periodAmount = document.querySelector('.period-select');
+      // periodAmount = document.querySelector('.period-select').value;
+
 let isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
