@@ -26,6 +26,8 @@ let calculateButton = document.getElementById('start'), //кнопка расс�
     periodSelect = document.querySelector('.period-select'),//ползунок
     periodAmount = document.querySelector('.period-amount');//цифра под ползунком
 
+calculateButton.disabled = true;
+
 let appData = {
   budget: 0,
   budgetDay: 0,
@@ -40,10 +42,6 @@ let appData = {
   percentDeposit: 0,
   moneyDeposit: 0,
   start: function(){
-    if (salary.value === '') {
-      alert ('Ошибка! Поле "Месячный доход" должно быть заполнено!');
-      return;
-    }
     appData.budget = +salary.value;
     appData.getIncome();
     appData.getIncomeMonth();
@@ -130,14 +128,15 @@ let appData = {
       if(itemValue !== ''){
         appData.addIncome.push(itemValue);
       }
-  });
+    });
   },
-  //накопленная сумма
+  //накопленная сумма за выбранный период
   calcSavedMoney: function(){
     return appData.budgetMonth * periodSelect.value;
   },
-  changePeriodSelect: function(event){
-    periodAmount.textContent = event.target.value;
+  //меняется цифра под ползунком при его перемещении
+  changePeriodSelect: function(){
+    periodAmount.textContent = periodSelect.value;
   },
   showResult: function(){
     resultBudgetMonth.value = appData.budgetMonth;
@@ -147,6 +146,9 @@ let appData = {
     resultAdditionalIncome.value = appData.addIncome.join(', ');
     resultTargetMonth.value = Math.ceil(appData.getTargetMonth());
     resultIncomePeriod.value = appData.calcSavedMoney();
+    periodSelect.addEventListener('input', function(){
+      resultIncomePeriod.value = appData.budgetMonth * periodSelect.value;
+    });
   },
   getStatusIncom: function(){
     if (appData.budgetDay < 0) {
@@ -172,6 +174,15 @@ let appData = {
     }
   },
 };
+
+salary.addEventListener('keyup', function(){
+  if (salary.value === '') {
+    calculateButton.disabled = true;
+  } else {
+    calculateButton.disabled = false;
+  }
+});
+
 // жмем кнопку "рассчитать"
 calculateButton.addEventListener('click', appData.start);
 
