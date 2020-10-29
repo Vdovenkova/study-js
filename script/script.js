@@ -182,9 +182,6 @@ let appData = {
 
     leftInputs.forEach(function(item) {
       item.disabled = false;
-    });
-
-    leftInputs.forEach(function(item) {
       item.value = '';
     });
 
