@@ -5,6 +5,7 @@ let isNumber = function(n) {
 };
 
 let calculateButton = document.getElementById('start'), //кнопка рассчитать
+    resetButton = document.getElementById('cancel'), //кнопка сбросить
     btnAddIncome = document.getElementsByTagName('button')[0], //кнопка плюс доп.доход
     btnAddExpenses = document.getElementsByTagName('button')[1], //кнп плюс обяз.расход
     checkmarkDeposit = document.querySelector('#deposit-check'),
@@ -24,7 +25,12 @@ let calculateButton = document.getElementById('start'), //кнопка расс�
     nameAdditionalExpenses= document.querySelector('.additional_expenses-item'),
     target = document.querySelector('.target-amount'),
     periodSelect = document.querySelector('.period-select'),//ползунок
-    periodAmount = document.querySelector('.period-amount');//цифра под ползунком
+    periodAmount = document.querySelector('.period-amount'),//цифра под ползунком
+
+    leftInputs = document.querySelectorAll('input[type=text]:not(.result-total)'),
+    rightInputs = document.querySelectorAll('.result-total');
+    // console.log('leftInputText: ', leftInputText);
+
 
 calculateButton.disabled = true;
 
@@ -52,6 +58,12 @@ let appData = {
     this.getAddIncome();
     this.getBudget();
     this.showResult();
+    // сюда - блокируем инпуты слева, убираем кнопку рассчитать, показываем кнопку сбросить
+    calculateButton.style.display = 'none';
+    resetButton.style.display = 'block';
+    leftInputs.forEach(function(item) {
+      item.disabled = true;
+    });
   },
   //добавляем на странице строки с наименованием и суммой доп.доходов
   addIncomeBlock: function(){
@@ -152,6 +164,55 @@ let appData = {
       resultIncomePeriod.value = appData.budgetMonth * periodSelect.value;
     });
   },
+  // сброс всех значений и расчетов
+  reset: function(){
+
+    this.budget = 0;
+    this.budgetDay = 0;
+    this.budgetMonth = 0;
+    this.income = {};
+    this.incomeMonth = 0;
+    this.addIncome = [];
+    this.expenses = {};
+    this.expensesMonth = 0;
+    this.addExpenses = [];
+    this.deposit = false;
+    this.percentDeposit = 0;
+    this.moneyDeposit = 0;
+
+    leftInputs.forEach(function(item) {
+      item.disabled = false;
+    });
+
+    leftInputs.forEach(function(item) {
+      item.value = '';
+    });
+
+    expensesItems.forEach(function(item, index) {
+      if (index !== 0) {
+        item.remove();
+      }
+    });
+    btnAddExpenses.style.display = 'block';
+
+    incomeItems.forEach(function(item, index) {
+        if (index !== 0) {
+          item.remove();
+        }
+    });
+    btnAddIncome.style.display = 'block';
+
+    periodSelect.value = 1;
+    periodAmount.textContent = periodSelect.value;
+
+    rightInputs.forEach(function(item) {
+      item.value = '';
+    });
+
+    calculateButton.style.display = 'block';
+    resetButton.style.display = 'none';
+
+  },
   getStatusIncom: function(){
     if (this.budgetDay < 0) {
       return ('Что то пошло не так');
@@ -187,6 +248,9 @@ salary.addEventListener('keyup', function(){
 
 // жмем кнопку "рассчитать"
 calculateButton.addEventListener('click', appData.start.bind(appData));
+
+// жмём кнопку сбросить
+resetButton.addEventListener('click', appData.reset.bind(appData));
 
 // жмем плюс для добавления строки с полями наименования и суммы доп.доходов
 btnAddIncome.addEventListener('click', appData.addIncomeBlock);
