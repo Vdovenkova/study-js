@@ -65,6 +65,8 @@ let appData = {
     document.querySelectorAll('input[type=text]:not(.result-total)').forEach(function(item) {
       item.disabled = true;
     });
+    btnAddIncome.disabled = true;
+    btnAddExpenses.disabled = true;
   },
   //добавляем на странице строки с наименованием и суммой доп.доходов
   addIncomeBlock: function(){
@@ -192,6 +194,7 @@ let appData = {
       }
     });
     btnAddExpenses.style.display = 'block';
+    btnAddExpenses.disabled = false;
 
     incomeItems.forEach(function(item, index) {
         if (index !== 0) {
@@ -199,6 +202,7 @@ let appData = {
         }
     });
     btnAddIncome.style.display = 'block';
+    btnAddIncome.disabled = false;
 
     periodSelect.value = 1;
     periodAmount.textContent = periodSelect.value;
