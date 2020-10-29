@@ -27,7 +27,7 @@ let calculateButton = document.getElementById('start'), //кнопка расс�
     periodSelect = document.querySelector('.period-select'),//ползунок
     periodAmount = document.querySelector('.period-amount'),//цифра под ползунком
 
-    leftInputs = document.querySelectorAll('input[type=text]:not(.result-total)'),
+    // leftInputs = document.querySelectorAll('input[type=text]:not(.result-total)'),
     rightInputs = document.querySelectorAll('.result-total');
     // console.log('leftInputText: ', leftInputText);
 
@@ -61,7 +61,8 @@ let appData = {
     // сюда - блокируем инпуты слева, убираем кнопку рассчитать, показываем кнопку сбросить
     calculateButton.style.display = 'none';
     resetButton.style.display = 'block';
-    leftInputs.forEach(function(item) {
+
+    document.querySelectorAll('input[type=text]:not(.result-total)').forEach(function(item) {
       item.disabled = true;
     });
   },
@@ -180,7 +181,7 @@ let appData = {
     this.percentDeposit = 0;
     this.moneyDeposit = 0;
 
-    leftInputs.forEach(function(item) {
+    document.querySelectorAll('input[type=text]:not(.result-total)').forEach(function(item) {
       item.disabled = false;
       item.value = '';
     });
