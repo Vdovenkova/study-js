@@ -243,32 +243,30 @@ AppData.prototype.getInfoDeposit = function(){
   }
 };
 
-calculateButton.disabled = true;
+AppData.prototype.eventListeners = function(){
+  let _this = this;
+  calculateButton.disabled = true;
+  salary.addEventListener('keyup', function(){
+    if (salary.value === '') {
+    calculateButton.disabled = true;
+    } else {
+    calculateButton.disabled = false;
+    }
+  });
+  // жмем кнопку "рассчитать"
+  calculateButton.addEventListener('click', _this.start.bind(_this));
+  // жмём кнопку сбросить
+  resetButton.addEventListener('click', _this.reset.bind(_this));
+  // жмем плюс для добавления строки с полями наименования и суммы доп.доходов
+  btnAddIncome.addEventListener('click', _this.addIncomeBlock);
+  // жмем плюс для добавления строки с полями наименования и суммы обязат.расходов
+  btnAddExpenses.addEventListener('click', _this.addExpensesBlock);
+  //двигаем ползунок, и выводим значение на страницу (в ф-ии changePeriodSelect) 
+  periodSelect.addEventListener('input', _this.changePeriodSelect);
+};
 
 const appData = new AppData();
 
-console.log(appData);
+appData.eventListeners();
 
-
-
-
-salary.addEventListener('keyup', function(){
-  if (salary.value === '') {
-    calculateButton.disabled = true;
-  } else {
-    calculateButton.disabled = false;
-  }
-});
-
-// жмем кнопку "рассчитать"
-calculateButton.addEventListener('click', appData.start.bind(appData));
-
-// жмём кнопку сбросить
-resetButton.addEventListener('click', appData.reset.bind(appData));
-
-// жмем плюс для добавления строки с полями наименования и суммы доп.доходов
-btnAddIncome.addEventListener('click', appData.addIncomeBlock);
-// жмем плюс для добавления строки с полями наименования и суммы обязат.расходов
-btnAddExpenses.addEventListener('click', appData.addExpensesBlock);
-//двигаем ползунок, и выводим значение на страницу (в ф-ии changePeriodSelect) 
-periodSelect.addEventListener('input', appData.changePeriodSelect);
+// console.log(appData);
