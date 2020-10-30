@@ -15,7 +15,7 @@ DomElement.prototype.createdElements = function() {
     elementSite.classList.add(this.selector.slice(1));
   } else if (this.selector[0] === '#'){
     elementSite = document.createElement('p');
-    elementSite.classList.add(this.selector.slice(1));
+    elementSite.id = this.selector.slice(1);
   }
 
   elementSite.style.cssText = `
