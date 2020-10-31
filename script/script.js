@@ -63,7 +63,7 @@ class AppData {
     btnAddExpenses.disabled = true;
   }
   addIncomeBlock (){
-    let cloneIncomeItems = incomeItems[0].cloneNode(true);
+    const cloneIncomeItems = incomeItems[0].cloneNode(true);
     btnAddIncome.before(cloneIncomeItems);
     incomeItems = document.querySelectorAll('.income-items');
     if(incomeItems.length === 3){
@@ -73,8 +73,8 @@ class AppData {
   //получаем значения наименования и суммы доп.доходов и передаём их в объект
   getIncome (){
     incomeItems.forEach((item) => {
-      let itemIncome = item.querySelector('.income-title').value;
-      let cashIncome = item.querySelector('.income-amount').value;
+      const itemIncome = item.querySelector('.income-title').value;
+      const cashIncome = item.querySelector('.income-amount').value;
       if(itemIncome !== '' && cashIncome !== ''){
         this.income[itemIncome] = +cashIncome;
       }
@@ -88,7 +88,7 @@ class AppData {
   }
   //добавляем на странице всего 3 строки с наименованием и суммой обязательных расходов
   addExpensesBlock (){
-    let cloneExpensesItems = expensesItems[0].cloneNode(true);
+    const cloneExpensesItems = expensesItems[0].cloneNode(true);
     btnAddExpenses.before(cloneExpensesItems);
     expensesItems = document.querySelectorAll('.expenses-items');
     if(expensesItems.length === 3){
@@ -98,8 +98,8 @@ class AppData {
   //получаем значения наименования и суммы обяз.расходов и передаём их в объект
   getExpenses (){
     expensesItems.forEach((item) => {
-      let itemExpenses = item.querySelector('.expenses-title').value;
-      let cashExpenses = item.querySelector('.expenses-amount').value;
+      const itemExpenses = item.querySelector('.expenses-title').value;
+      const cashExpenses = item.querySelector('.expenses-amount').value;
       if(itemExpenses !== '' && cashExpenses !== ''){
         this.expenses[itemExpenses] = +cashExpenses;
       }
@@ -122,8 +122,7 @@ class AppData {
   }
   //перечисление возможных расходов, запись их в массив appData.addExpenses
   getAddExpenses (){
-    // const _this = this;
-    let addExpenses = nameAdditionalExpenses.value.split(',');
+    const addExpenses = nameAdditionalExpenses.value.split(',');
     addExpenses.forEach((item) => {
       item = item.trim();
       if(item !== ''){
@@ -133,9 +132,8 @@ class AppData {
   }
   // перечисление возможных доп.доходов, получаем и записываем в массив
   getAddIncome (){
-    // const _this = this;
     nameAdditionalIncome.forEach((item) => {
-      let itemValue = item.value.trim();
+      const itemValue = item.value.trim();
       if(itemValue !== ''){
         this.addIncome.push(itemValue);
       }
