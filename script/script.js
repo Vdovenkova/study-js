@@ -8,7 +8,7 @@ const calculateButton = document.getElementById('start'), //кнопка рас�
       resetButton = document.getElementById('cancel'), //кнопка сбросить
       btnAddIncome = document.getElementsByTagName('button')[0], //кнопка плюс доп.доход
       btnAddExpenses = document.getElementsByTagName('button')[1], //кнп плюс обяз.расход
-      checkmarkDeposit = document.querySelector('#deposit-check'),
+      depositCheck = document.querySelector('#deposit-check'),
       nameAdditionalIncome = document.querySelectorAll('.additional_income-item'),
       resultBudgetMonth = document.getElementsByClassName('budget_month-value')[0],
       resultBudgetDay = document.getElementsByClassName('budget_day-value')[0],
@@ -22,7 +22,10 @@ const calculateButton = document.getElementById('start'), //кнопка рас�
       target = document.querySelector('.target-amount'),
       periodSelect = document.querySelector('.period-select'),//ползунок
       periodAmount = document.querySelector('.period-amount'),//цифра под ползунком
-      rightInputs = document.querySelectorAll('.result-total');
+      rightInputs = document.querySelectorAll('.result-total'),
+      depositBank = document.querySelector('.deposit-bank'),
+      depositAmount = document.querySelector('.deposit-amount'),
+      depositPercent = document.querySelector('.deposit-percent');
 
 let incomeItems = document.querySelectorAll('.income-items'),
     expensesItems = document.querySelectorAll('.expenses-items');
@@ -43,6 +46,11 @@ class AppData {
     this.moneyDeposit = 0;
   }
   start (){
+    if (!isNumber(depositPercent.value) || +depositPercent.value > 100 || +depositPercent.value <= 0) {
+      alert('Введите корректное значение в поле проценты');
+      return;
+    }
+    
     this.budget = +salary.value;
     this.getIncome();
     this.getIncomeMonth();
@@ -50,6 +58,7 @@ class AppData {
     this.getExpensesMonth();
     this.getAddExpenses();
     this.getAddIncome();
+    this.getInfoDeposit();
     this.getBudget();
     this.showResult();
     //блокируем инпуты слева, убираем кнопку рассчитать, показываем кнопку сбросить
@@ -59,8 +68,12 @@ class AppData {
     document.querySelectorAll('input[type=text]:not(.result-total)').forEach((item) => {
       item.disabled = true;
     });
+    //блок кнопок плюс
     btnAddIncome.disabled = true;
     btnAddExpenses.disabled = true;
+    //блок чекбокса депозит и выбора банка
+    depositCheck.disabled = true;
+    depositBank.disabled = true;
   }
   addIncomeBlock (){
     const cloneIncomeItems = incomeItems[0].cloneNode(true);
@@ -113,7 +126,8 @@ class AppData {
     return this.expensesMonth;
   }
   getBudget (){
-    this.budgetMonth = (this.budget + this.incomeMonth - this.expensesMonth);
+    const monthDeposit = this.moneyDeposit * (this.percentDeposit / 100);
+    this.budgetMonth = (this.budget + this.incomeMonth - this.expensesMonth + monthDeposit);
     this.budgetDay = Math.floor(this.budgetMonth / 30);
   }
   // за сколько месяцев будет накоплена сумма
@@ -202,6 +216,15 @@ class AppData {
       item.value = '';
     });
 
+    depositCheck.checked = false;
+    depositCheck.disabled = false;
+    depositBank.value = '0';
+    depositBank.disabled = false;
+    depositPercent.value = '';
+    depositBank.style.display = 'none';
+    depositAmount.style.display = 'none';
+    depositPercent.style.display = 'none';
+
     resetButton.style.display = 'none';
     calculateButton.style.display = 'block';
     calculateButton.disabled = true;
@@ -217,17 +240,41 @@ class AppData {
       return ('У вас высокий уровень дохода');
     }
   }
-
   getInfoDeposit (){
     if (this.deposit){
-      do {
-        this.moneyDeposit = prompt('Какова сумма депозита?');
-      }
-      while(!isNumber(this.moneyDeposit) || +this.moneyDeposit === 0);
-      do {
-        this.percentDeposit = prompt('Каков годовой процент по вкладу?', 10);
-      }
-      while(!isNumber(this.percentDeposit) || +this.moneyDeposit === 0);
+      this.percentDeposit = depositPercent.value;
+      this.moneyDeposit = depositAmount.value;
+    }
+  }
+  changePercent(){
+    const valueSelect = this.value;
+    if (valueSelect === 'other') {
+      //здесь появляется поле ввода процента
+      depositPercent.style.display = 'inline-block';
+      depositPercent.disabled  = false;
+      depositPercent.value = '';
+    } else {
+      depositPercent.value = valueSelect;
+      depositPercent.style.display = 'none';
+    }
+  }
+  //установка снятие флага депозит
+  depositHandler(){
+    if (depositCheck.checked){
+      depositBank.style.display = 'inline-block';
+      depositAmount.style.display = 'inline-block';
+      this.deposit = true;
+      depositBank.addEventListener('change', this.changePercent);
+    } else {
+      depositBank.style.display = 'none';
+      depositAmount.style.display = 'none';
+      depositPercent.style.display = 'none';
+      depositPercent.disabled  = true;
+      depositBank.value = '0';
+      depositAmount.value = '';
+      depositPercent.value = '';
+      this.deposit = false;
+      depositBank.removeEventListener('change', this.changePercent);
     }
   }
 
@@ -235,9 +282,9 @@ class AppData {
     calculateButton.disabled = true;
     salary.addEventListener('keyup', () => {
       if (salary.value === '') {
-      calculateButton.disabled = true;
+        calculateButton.disabled = true;
       } else {
-      calculateButton.disabled = false;
+        calculateButton.disabled = false;
       }
     });
     // жмем кнопку "рассчитать"
@@ -250,6 +297,12 @@ class AppData {
     btnAddExpenses.addEventListener('click', this.addExpensesBlock);
     //двигаем ползунок, и выводим значение на страницу (в ф-ии changePeriodSelect) 
     periodSelect.addEventListener('input', this.changePeriodSelect);
+    //флаг депозит не установлен, значения полей очищены
+    depositCheck.checked = false;
+    depositBank.value = '0';
+    depositPercent.value = '';
+    //ставим или убираем флаг депозит
+    depositCheck.addEventListener('change', this.depositHandler.bind(this));
   }
 }
 
