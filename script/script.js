@@ -74,13 +74,24 @@ window.addEventListener('DOMContentLoaded', function(){
   // модальные окна
   const togglePopUp = () => {
     const popup = document.querySelector('.popup'),
+          popupContent = document.querySelector('.popup-content'),
           popupBtn = document.querySelectorAll('.popup-btn'),
           popupClose = document.querySelector('.popup-close');
+    
+    const popupAnimate = () => {
+      let start = Date.now();
+      let timer = setInterval(function() {
+      let timePassed = Date.now() - start;
+        popup.style.display = 'block';
+        popupContent.style.top = `${timePassed / 40}px`;
+        if (timePassed > 2000) {
+          clearInterval(timer);
+        }
+      }, 40);
+    };
 
     popupBtn.forEach((elem) => {
-      elem.addEventListener('click', () => {
-        popup.style.display = 'block';
-      });
+      elem.addEventListener('click', popupAnimate);
     });
 
     popupClose.addEventListener('click', () => {
