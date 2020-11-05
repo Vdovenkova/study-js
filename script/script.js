@@ -91,7 +91,13 @@ window.addEventListener('DOMContentLoaded', function(){
     };
 
     popupBtn.forEach((elem) => {
-      elem.addEventListener('click', popupAnimate);
+      elem.addEventListener('click', () => {
+        if (window.innerWidth > 768) {
+          popupAnimate();
+        } else {
+          popup.style.display = 'block';
+        }
+      });
     });
 
     popupClose.addEventListener('click', () => {
