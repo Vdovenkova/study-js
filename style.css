@@ -1,0 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  padding: 20px 0 0 50px;
+}
+
+.text {
+  font-size: 22px;
+  font-style: italic;
+}
