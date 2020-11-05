@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', function(){
   'use strict';
 
-  // timer
+  // таймер
   function countTimer(deadline){
     const timerHours = document.querySelector('#timer-hours'),
         timerMinutes = document.querySelector('#timer-minutes'),
@@ -52,4 +52,29 @@ window.addEventListener('DOMContentLoaded', function(){
     }, 1000);
   }
   countTimer('7 november 2020');
+
+  // меню
+  const toggleMenu = () => {
+    const btnMenu = document.querySelector('.menu'),
+          menu = document.querySelector('menu'),
+          closeBtn = document.querySelector('.close-btn'),
+          menuItems = menu.querySelectorAll('ul>li');
+    
+    btnMenu.addEventListener('click', () => {
+      if (!menu.style.transform || menu.style.transform === `translate(-100%)`) {
+        menu.style.transform = `translate(0)`;
+      } else {
+        menu.style.transform = `translate(-100%)`;
+      }
+    });
+    closeBtn.addEventListener('click', () => {
+      menu.style.transform = `translate(-100%)`;
+    });
+    for (let i = 0; i < menuItems.length; i++) {
+      menuItems[i].addEventListener('click', () => {
+        menu.style.transform = `translate(-100%)`;
+      });
+    }
+  };
+  toggleMenu();
 });
