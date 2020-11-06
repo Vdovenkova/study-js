@@ -51,7 +51,7 @@ window.addEventListener('DOMContentLoaded', function(){
       // console.log(count);
     }, 1000);
   }
-  countTimer('7 november 2020');
+  countTimer('01 january 2020');
 
   // меню
   const toggleMenu = () => {
@@ -74,31 +74,27 @@ window.addEventListener('DOMContentLoaded', function(){
   // модальные окна
   const togglePopUp = () => {
     const popup = document.querySelector('.popup'),
-          
+          popupContent = document.querySelector('.popup-content'),
           popupBtn = document.querySelectorAll('.popup-btn'),
           popupClose = document.querySelector('.popup-close');
-
-    const animation = () => {
-      const popupContent = document.querySelector('.popup-content');
-      let count = 0;
-      const popupAnimate = () => {
-        count++;
-        const animate = requestAnimationFrame(popupAnimate);
-        if (count < 30) {
-        popupContent.style.top = `${count * 2}px`;
-        } else {
-          cancelAnimationFrame(animate);
+    
+    const popupAnimate = () => {
+      let start = Date.now();
+      let timer = setInterval(function() {
+        let timePassed = Date.now() - start;
+        popupContent.style.top = `${timePassed / 5}px`;
+        if (timePassed > 400) {
+          clearInterval(timer);
         }
-      };
-      popupAnimate();
+      }, 20);
     };
 
     popupBtn.forEach((elem) => {
       elem.addEventListener('click', () => {
         popup.style.display = 'block';
         if (window.innerWidth > 768) {
-         animation();
-        }
+          popupAnimate();
+        } 
       });
     });
 
@@ -107,5 +103,4 @@ window.addEventListener('DOMContentLoaded', function(){
     });
   };
   togglePopUp();
- 
 });
