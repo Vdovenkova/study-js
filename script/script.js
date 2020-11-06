@@ -108,4 +108,32 @@ window.addEventListener('DOMContentLoaded', function(){
   };
   togglePopUp();
  
+  function slowScrollBlocks (){
+    const anchors = document.querySelectorAll('ul > li > a[href*="#"]');
+    anchors.forEach((elem) => {
+      elem.addEventListener('click', (event) => {
+        event.preventDefault();
+        const blockID = elem.getAttribute('href').substr(1);
+        document.getElementById(blockID).scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      });
+     });
+  }
+  slowScrollBlocks();
+  
+  function slowScrollService (){
+    const anchor = document.querySelector('a[href*="#service-block"]');
+    const block = document.getElementById('service-block');
+    anchor.addEventListener('click', (event) => {
+      event.preventDefault();
+      block.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+      });
+    });
+  }
+  slowScrollService();
+
 });
