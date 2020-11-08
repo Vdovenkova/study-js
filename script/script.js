@@ -74,9 +74,7 @@ window.addEventListener('DOMContentLoaded', function(){
   // модальные окна
   const togglePopUp = () => {
     const popup = document.querySelector('.popup'),
-          
-          popupBtn = document.querySelectorAll('.popup-btn'),
-          popupClose = document.querySelector('.popup-close');
+          popupBtn = document.querySelectorAll('.popup-btn');
 
     const animation = () => {
       const popupContent = document.querySelector('.popup-content');
@@ -102,8 +100,16 @@ window.addEventListener('DOMContentLoaded', function(){
       });
     });
 
-    popupClose.addEventListener('click', () => {
-      popup.style.display = 'none';
+    popup.addEventListener('click', (event) => {
+      let target = event.target;
+      if (target.classList.contains('popup-close')) {
+        popup.style.display = 'none';
+      } else {
+          target = target.closest('.popup-content');
+          if(!target) {
+            popup.style.display = 'none';
+          }
+        }
     });
   };
   togglePopUp();
