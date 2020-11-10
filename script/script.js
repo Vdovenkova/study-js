@@ -53,20 +53,15 @@ window.addEventListener('DOMContentLoaded', function(){
   }
   countTimer('12 november 2020');
 
-  const slowScrollBlocks = () =>{
-    const anchors = document.querySelectorAll('ul > li > a[href*="#"]');
-    anchors.forEach((elem) => {
-      elem.addEventListener('click', (event) => {
+  
+  function slowScrollBlocks (event, elem){
         event.preventDefault();
         const blockID = elem.getAttribute('href').substr(1);
         document.getElementById(blockID).scrollIntoView({
           behavior: 'smooth',
           block: 'start'
         });
-      });
-     });
-  };
-  slowScrollBlocks();
+  }
   
   const slowScrollService = () => {
     const anchor = document.querySelector('a[href*="#service-block"]');
@@ -83,20 +78,34 @@ window.addEventListener('DOMContentLoaded', function(){
 
   // меню
   const toggleMenu = () => {
-    const btnMenu = document.querySelector('.menu'),
-          menu = document.querySelector('menu');
+    // const btnMenu = document.querySelector('.menu'),
+    const menu = document.querySelector('menu');
 
     const handlerMenu = () => {
       menu.classList.toggle('active-menu');
     };
 
-    btnMenu.addEventListener('click', handlerMenu);
-
-    menu.addEventListener('click', (event) => {
+    document.addEventListener('click', (event) => {
       let target = event.target;
-      if (target.closest('menu')) {
-        // console.log(target);
+      // console.log(target);
+      if (target.closest('.menu')) {
         handlerMenu();
+        return;
+      }
+
+      if (target.classList.contains('close-btn')) {
+        handlerMenu();
+        // return;
+      }
+
+      if (target.matches('li a')) {
+        slowScrollBlocks (event, target);
+        handlerMenu();
+      }
+      
+      if(!target.closest('menu')) {
+        // handlerMenu();
+        menu.classList.remove('active-menu');
       }
     });
   };
@@ -145,8 +154,6 @@ window.addEventListener('DOMContentLoaded', function(){
   };
   togglePopUp();
  
-
-
   // табы
   const tabs = () => {
     const tabHeader = document.querySelector('.service-header'), //весь блок
