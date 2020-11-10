@@ -51,23 +51,54 @@ window.addEventListener('DOMContentLoaded', function(){
       // console.log(count);
     }, 1000);
   }
-  countTimer('7 november 2020');
+  countTimer('12 november 2020');
+
+  const slowScrollBlocks = () =>{
+    const anchors = document.querySelectorAll('ul > li > a[href*="#"]');
+    anchors.forEach((elem) => {
+      elem.addEventListener('click', (event) => {
+        event.preventDefault();
+        const blockID = elem.getAttribute('href').substr(1);
+        document.getElementById(blockID).scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      });
+     });
+  };
+  slowScrollBlocks();
+  
+  const slowScrollService = () => {
+    const anchor = document.querySelector('a[href*="#service-block"]');
+    const block = document.getElementById('service-block');
+    anchor.addEventListener('click', (event) => {
+      event.preventDefault();
+      block.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+      });
+    });
+  };
+  slowScrollService();
 
   // меню
   const toggleMenu = () => {
     const btnMenu = document.querySelector('.menu'),
-          menu = document.querySelector('menu'),
-          closeBtn = document.querySelector('.close-btn'),
-          menuItems = menu.querySelectorAll('ul>li');
+          menu = document.querySelector('menu');
 
     const handlerMenu = () => {
       menu.classList.toggle('active-menu');
     };
 
     btnMenu.addEventListener('click', handlerMenu);
-    closeBtn.addEventListener('click', handlerMenu);
-    menuItems.forEach((element) => element.addEventListener('click', handlerMenu));
 
+    menu.addEventListener('click', (event) => {
+      let target = event.target;
+      if (target.closest('menu')) {
+        // console.log(target);
+        handlerMenu();
+      }
+    });
   };
   toggleMenu();
 
@@ -114,33 +145,7 @@ window.addEventListener('DOMContentLoaded', function(){
   };
   togglePopUp();
  
-  function slowScrollBlocks (){
-    const anchors = document.querySelectorAll('ul > li > a[href*="#"]');
-    anchors.forEach((elem) => {
-      elem.addEventListener('click', (event) => {
-        event.preventDefault();
-        const blockID = elem.getAttribute('href').substr(1);
-        document.getElementById(blockID).scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      });
-     });
-  }
-  slowScrollBlocks();
-  
-  function slowScrollService (){
-    const anchor = document.querySelector('a[href*="#service-block"]');
-    const block = document.getElementById('service-block');
-    anchor.addEventListener('click', (event) => {
-      event.preventDefault();
-      block.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-      });
-    });
-  }
-  slowScrollService();
+
 
   // табы
   const tabs = () => {
