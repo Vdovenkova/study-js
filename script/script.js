@@ -185,11 +185,16 @@ window.addEventListener('DOMContentLoaded', function(){
   };
   tabs();
 
-  // пагинация для слайдера
-  const sliderDots = () => {
-    const slide = document.querySelectorAll('.portfolio-item'),
+  // Слайдер
+  const slider = () => {
+    const slider = document.querySelector('.portfolio-content'),
+          slide = document.querySelectorAll('.portfolio-item'),
           portfolioDots = document.querySelector('.portfolio-dots');
+          // arrowBtn = document.querySelectorAll('.portfolio-btn'),
+          // dot = document.querySelectorAll('.dot');
     
+    // // пагинация для слайдера
+    // const sliderDots = () => {    
     for (let i = 0; i < slide.length; i++) {
       let liDot = document.createElement('li');
       liDot.classList.add('dot');
@@ -197,27 +202,7 @@ window.addEventListener('DOMContentLoaded', function(){
     }
     const dot = document.querySelectorAll('.dot');
     dot[0].classList.add('dot-active');
-  };
-  sliderDots();
-
-  // Слайдер
-  const slider = () => {
-    const slider = document.querySelector('.portfolio-content'),
-          slide = document.querySelectorAll('.portfolio-item'),
-          portfolioDots = document.querySelector('.portfolio-dots'),
-          // arrowBtn = document.querySelectorAll('.portfolio-btn'),
-          dot = document.querySelectorAll('.dot');
-    
-    // пагинация для слайдера
-    const sliderDots = () => {    
-      for (let i = 0; i < slide.length; i++) {
-        let liDot = document.createElement('li');
-        liDot.classList.add('dot');
-        portfolioDots.append(liDot);
-      }
-      // const dot = document.querySelectorAll('.dot');
-      dot[0].classList.add('dot-active');
-    };
+    // };
     // sliderDots();
 
     let currentSlide = 0,
@@ -296,4 +281,20 @@ window.addEventListener('DOMContentLoaded', function(){
     startSlide(3000);
   };
   slider();
+
+  // Команда
+  const command = () => {
+    const photo = document.querySelectorAll('.command__photo');
+
+    photo.forEach((elem) => {
+      let imgDefault = elem.src;
+      elem.addEventListener('mouseenter', (event) => {
+        event.target.src = event.target.dataset.img;
+      });
+      elem.addEventListener('mouseleave', (event) => {
+        event.target.src = imgDefault;
+      });
+    });
+  };
+  command();
 });
