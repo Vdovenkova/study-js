@@ -282,8 +282,8 @@ window.addEventListener('DOMContentLoaded', function(){
   };
   slider();
 
-  // Команда
-  const command = () => {
+  // смена фоточек команды при наведении
+  const changeImg = () => {
     const photo = document.querySelectorAll('.command__photo');
 
     photo.forEach((elem) => {
@@ -296,5 +296,18 @@ window.addEventListener('DOMContentLoaded', function(){
       });
     });
   };
-  command();
+  changeImg();
+
+  // вводить только цифры
+  const calculator = () => {
+    const inputsCalc = document.querySelectorAll('input.calc-item');
+    // console.log('inputsCalc: ', inputsCalc);
+
+    inputsCalc.forEach((elem) => {
+      elem.addEventListener('input', () => {
+        elem.value = elem.value.replace(/\D/g, '');
+      });
+    });
+  };
+  calculator();
 });
