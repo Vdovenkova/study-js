@@ -361,28 +361,14 @@ window.addEventListener('DOMContentLoaded', function(){
       loadMessage = 'Загрузка..',
       successMessage = 'Спасибо, мы скоро с Вами свяжемся!';
     
-    const form = document.getElementById('form1');
+    const form1 = document.getElementById('form1');
+    const form2 = document.getElementById('form2');
+    const form3 = document.getElementById('form3');
 
     const statusMessage = document.createElement('div');
-    statusMessage.style.cssText = 'font-size: 18px';
-
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      form.append(statusMessage);
-      statusMessage.textContent = loadMessage;
-      const formData = new FormData(form);
-      let body = {};
-      formData.forEach((value, key) => {
-        body[key] = value;
-      });
-
-      postData (body, () => {
-        statusMessage.textContent = successMessage;
-      },
-      (error) => {
-        statusMessage.textContent = errorMessage;
-      });
-    });
+    statusMessage.style.cssText = `
+    font-size: 18px;
+    color: #fff`;
 
     const postData = (body, outputData, errorData) => {
       const request = new XMLHttpRequest();
@@ -400,6 +386,96 @@ window.addEventListener('DOMContentLoaded', function(){
       request.setRequestHeader('Content-Type', 'application/json');
       request.send(JSON.stringify(body));
     };
+
+    form1.addEventListener('submit', (event) => {
+      event.preventDefault();
+      form1.append(statusMessage);
+      statusMessage.textContent = loadMessage;
+      const form1Data = new FormData(form1);
+      let body = {};
+      form1Data.forEach((value, key) => {
+        body[key] = value;
+      });
+
+      postData (body, () => {
+        statusMessage.textContent = successMessage;
+      },
+      (error) => {
+        statusMessage.textContent = errorMessage;
+      });
+
+      form1.querySelectorAll('input').forEach((item) => {
+        // console.log(item);
+        item.value = '';
+      });
+    });
+
+    form2.addEventListener('submit', (event) => {
+      event.preventDefault();
+      form2.append(statusMessage);
+      statusMessage.textContent = loadMessage;
+      const form2Data = new FormData(form2);
+      let body = {};
+      form2Data.forEach((value, key) => {
+        body[key] = value;
+      });
+
+      postData (body, () => {
+        statusMessage.textContent = successMessage;
+      },
+      (error) => {
+        statusMessage.textContent = errorMessage;
+      });
+
+      form2.querySelectorAll('input').forEach((item) => {
+        // console.log(item);
+        item.value = '';
+      });
+    });
+
+    form3.addEventListener('submit', (event) => {
+      event.preventDefault();
+      form3.append(statusMessage);
+      statusMessage.textContent = loadMessage;
+      const form3Data = new FormData(form3);
+      let body = {};
+      form3Data.forEach((value, key) => {
+        body[key] = value;
+      });
+
+      postData (body, () => {
+        statusMessage.textContent = successMessage;
+      },
+      (error) => {
+        statusMessage.textContent = errorMessage;
+      });
+
+      form3.querySelectorAll('input').forEach((item) => {
+        // console.log(item);
+        item.value = '';
+      });
+    });
+
+    const validForms = (idForm) => {
+      let form = document.getElementById(idForm);
+      // console.log(form);
+      form.addEventListener('input', (event) => {
+        let target = event.target;
+        if (target.classList.contains('form-phone')) {
+            target.value = target.value.replace(/[^+\d]/, '');
+        }
+        if (target.classList.contains('form-name')) {
+            target.value = target.value.replace(/[^А-Яа-яЁё\s]/ig, '');
+        }
+        if (target.classList.contains('mess')) {
+            target.value = target.value.replace(/[^А-Яа-яЁё\s]/ig, '');
+        }
+      });
+    };
+    
+    validForms('form1');
+    validForms('form2');
+    validForms('form3');
   };
   sendForm();
 });
