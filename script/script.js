@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', function(){
       return {timeRemaining, hours, minutes, seconds};
     }
 
-    const idUpdateClock = setInterval(function() {
+    const idUpdateClock = () => {
       // count++;
       const timer = getTimeRemaining();
 
@@ -49,11 +49,14 @@ window.addEventListener('DOMContentLoaded', function(){
         clearInterval(idUpdateClock);
       }
       // console.log(count);
-    }, 1000);
-  }
-  countTimer('12 november 2020');
+    };
+    
+    idUpdateClock();
 
-  
+    setInterval(idUpdateClock, 1000);
+  }
+  countTimer('18 november 2020');
+
   function slowScrollBlocks (event, elem){
         event.preventDefault();
         const blockID = elem.getAttribute('href').substr(1);
@@ -368,23 +371,30 @@ window.addEventListener('DOMContentLoaded', function(){
     font-size: 18px;
     color: #fff`;
 
-    const postData = (body, outputData, errorData) => {
-      const request = new XMLHttpRequest();
-      request.addEventListener('readystatechange', () => {
-        if (request.readyState !== 4) {
-          return;
-        }
-        if (request.status === 200) {
-          outputData();
-        } else {
-          errorData(request.status);
-        }
-      });
+    // const postData = (body, outputData, errorData) => {
+    // в аргументы ф-ии передаём только отправляемые данные, outputData и errorData в промисе.
+    const postData = (body) => {
+      // далее сразу возвращаем промис
+      return new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest();
+        request.addEventListener('readystatechange', () => {
+          if (request.readyState !== 4) {
+            return;
+          }
+          if (request.status === 200) {
+            resolve();
+            // outputData();
+          } else {
+            reject(request.status);
+            // errorData(request.status);
+          }
+        });
       request.open('POST', './server.php');
       request.setRequestHeader('Content-Type', 'application/json');
       request.send(JSON.stringify(body));
+      });
     };
-
+  
     forms.forEach((elem) => {
       elem.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -396,12 +406,13 @@ window.addEventListener('DOMContentLoaded', function(){
           body[key] = value;
         });
 
-        postData (body, () => {
-          statusMessage.textContent = successMessage;
-        },
-        (error) => {
-          statusMessage.textContent = errorMessage;
-        });
+        postData(body)
+          .then(() => {
+            statusMessage.textContent = successMessage;
+          }, (error) => {
+            statusMessage.textContent = errorMessage;
+            console.log(error);
+          });
 
         elem.querySelectorAll('input').forEach((item) => {
           // console.log(item);
