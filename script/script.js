@@ -413,11 +413,14 @@ window.addEventListener('DOMContentLoaded', function(){
             statusMessage.textContent = errorMessage;
             console.log(error);
           });
+          
+        setTimeout(() => {
+          elem.querySelectorAll('input').forEach((item) => {
+            item.value = '';
+          });
 
-        elem.querySelectorAll('input').forEach((item) => {
-          // console.log(item);
-          item.value = '';
-        });
+          statusMessage.remove();
+        }, 5000);
       });
     });
     
