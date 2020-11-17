@@ -371,13 +371,13 @@ window.addEventListener('DOMContentLoaded', function(){
     font-size: 18px;
     color: #fff`;
 
-      const postData = (formData) => {
+    const postData = (body) => {
       return fetch('./server.php', {
         method: 'POST',
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'application/json'
         },
-        body: formData
+        body: JSON.stringify(body)
       });
     };
   
@@ -387,8 +387,12 @@ window.addEventListener('DOMContentLoaded', function(){
         elem.append(statusMessage);
         statusMessage.textContent = loadMessage;
         const formData = new FormData(elem);
+        let body = {};
+        formData.forEach((value, key) => {
+          body[key] = value;
+        });
 
-        postData(formData)
+        postData(body)
           .then((respons) => {
             if (respons.status !== 200) {
               throw new Error('Status network not 200');
@@ -422,7 +426,7 @@ window.addEventListener('DOMContentLoaded', function(){
             target.value = target.value.replace(/[^А-Яа-яЁё\s]/ig, '');
         }
         if (target.classList.contains('mess')) {
-            target.value = target.value.replace(/[^А-Яа-яЁё\s]/ig, '');
+            target.value = target.value.replace(/[^А-Яа-яЁё\s\.,:;!?-]/ig, '');
         }
       });
     };
