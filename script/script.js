@@ -371,27 +371,13 @@ window.addEventListener('DOMContentLoaded', function(){
     font-size: 18px;
     color: #fff`;
 
-    // const postData = (body, outputData, errorData) => {
-    // в аргументы ф-ии передаём только отправляемые данные, outputData и errorData в промисе.
     const postData = (body) => {
-      // далее сразу возвращаем промис
-      return new Promise((resolve, reject) => {
-        const request = new XMLHttpRequest();
-        request.addEventListener('readystatechange', () => {
-          if (request.readyState !== 4) {
-            return;
-          }
-          if (request.status === 200) {
-            resolve();
-            // outputData();
-          } else {
-            reject(request.status);
-            // errorData(request.status);
-          }
-        });
-      request.open('POST', './server.php');
-      request.setRequestHeader('Content-Type', 'application/json');
-      request.send(JSON.stringify(body));
+      return fetch('./server.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
       });
     };
   
@@ -407,11 +393,15 @@ window.addEventListener('DOMContentLoaded', function(){
         });
 
         postData(body)
-          .then(() => {
+          .then((respons) => {
+            if (respons.status !== 200) {
+              throw new Error('Status network not 200');
+            }
             statusMessage.textContent = successMessage;
-          }, (error) => {
+          })
+          .catch((error) => {
             statusMessage.textContent = errorMessage;
-            console.log(error);
+            // console.log(error);
           });
           
         setTimeout(() => {
