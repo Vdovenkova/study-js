@@ -1,0 +1,25 @@
+body {
+  background-color: #bb91a3;
+  padding-top: 60px;
+}
+
+.wrapper,
+button {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#color {
+  color: white;
+}
+button {
+  margin-top: 30px;
+  padding: 15px 45px;
+  color: #bb91a3;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+button:focus {
+  outline: none;
+}
