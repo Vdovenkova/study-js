@@ -1,5 +1,9 @@
 'use strict';
 
+const divElem = document.createElement('div');
+let num = 266219;
+let multNums = 1;
+
 document.body.style.cssText = `
 padding: 40px 0 0 50px;
 font-family: sans-serif;
@@ -7,11 +11,8 @@ font-size: 22px;
 line-height: 1.5;
 `;
 
-const divElem = document.createElement('div');
 document.body.prepend(divElem);
 
-let num = 266219;
-let multNums = 1;
 divElem.insertAdjacentHTML('beforeend', `
 <div>Заданное число: ${num}</div>`);
 
