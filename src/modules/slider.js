@@ -9,11 +9,12 @@ const slider = () => {
         // dot = document.querySelectorAll('.dot');
   
   // // пагинация для слайдера
-  // const sliderDots = () => {    
+  // const sliderDots = () => {
   for (let i = 0; i < slide.length; i++) {
     let liDot = document.createElement('li');
     liDot.classList.add('dot');
-    portfolioDots.append(liDot);
+    // portfolioDots.append(liDot);
+    portfolioDots.appendChild(liDot);
   }
   const dot = document.querySelectorAll('.dot');
   dot[0].classList.add('dot-active');

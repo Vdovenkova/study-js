@@ -26,7 +26,8 @@ const sendForm = () => {
   forms.forEach((elem) => {
     elem.addEventListener('submit', (event) => {
       event.preventDefault();
-      elem.append(statusMessage);
+      elem.appendChild(statusMessage);
+      // elem.append(statusMessage); 
       statusMessage.textContent = loadMessage;
       const formData = new FormData(elem);
       let body = {};

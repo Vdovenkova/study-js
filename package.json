@@ -4,7 +4,7 @@
   "description": "glo",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack serve --mode=development --open Chrome.exe ",
+    "dev": "webpack-dev-server --open --mode=development",
     "build": "webpack --mode=production"
   },
   "repository": {
@@ -19,9 +19,17 @@
   },
   "homepage": "https://github.com/Vdovenkova/study-js#readme",
   "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "babel-loader": "^8.0.6",
     "path": "^0.12.7",
-    "webpack": "^5.5.0",
-    "webpack-cli": "^4.2.0",
-    "webpack-dev-server": "^3.11.0"
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "element-closest": "^3.0.2",
+    "nodelist-foreach-polyfill": "^1.2.0"
   }
 }
