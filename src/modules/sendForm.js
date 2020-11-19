@@ -51,7 +51,6 @@ const sendForm = () => {
         elem.querySelectorAll('input').forEach((item) => {
           item.value = '';
         });
-
         statusMessage.remove();
       }, 5000);
     });
