@@ -2,16 +2,74 @@
 
 // отправка данных с форм
 const sendForm = () => {
+  const forms = document.querySelectorAll('form');
   const errorMessage = 'Что-то пошло не так..',
-    loadMessage = 'Загрузка..',
     successMessage = 'Спасибо, мы скоро с Вами свяжемся!';
   
-  const forms = document.querySelectorAll('form');
+  const loadMessage = document.createElement('div');
+    let styleLoadMsg;
 
   const statusMessage = document.createElement('div');
   statusMessage.style.cssText = `
     font-size: 18px;
     color: #fff`;
+
+  const spinner = (elem) => {
+      loadMessage.classList.add('sk-flow');
+      elem.append(loadMessage);
+      loadMessage.innerHTML = `
+        <div class="sk-flow-dot"></div>
+        <div class="sk-flow-dot"></div>
+        <div class="sk-flow-dot"></div>`;
+
+      styleLoadMsg = document.createElement('style');
+      styleLoadMsg.textContent = `
+          :root {
+            --sk-color: rgb(250, 243, 243);
+          }
+
+          .sk-flow {
+            margin: auto;
+            width: 60px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+
+          .sk-flow-dot {
+            width: 13px;
+            height: 13px;
+            background-color: var(--sk-color);
+            border-radius: 50%;
+            animation: sk-flow 1.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s infinite
+              both;
+          }
+
+          .sk-flow-dot:nth-child(1) {
+            animation-delay: -0.3s;
+          }
+          .sk-flow-dot:nth-child(2) {
+            animation-delay: -0.15s;
+          }
+
+          @keyframes sk-flow {
+            0%,
+            80%,
+            100% {
+              transform: scale(0.3);
+            }
+            40% {
+              transform: scale(1);
+            }
+          }`;
+      document.head.append(styleLoadMsg);
+    };
+
+    const delSpinner = () => {
+      loadMessage.remove();
+      styleLoadMsg.remove();
+    };
 
   const postData = (body) => {
     return fetch('./server.php', {
@@ -26,9 +84,10 @@ const sendForm = () => {
   forms.forEach((elem) => {
     elem.addEventListener('submit', (event) => {
       event.preventDefault();
-      elem.appendChild(statusMessage);
-      // elem.append(statusMessage); 
-      statusMessage.textContent = loadMessage;
+      // elem.appendChild(statusMessage);
+      // elem.append(statusMessage);
+      // statusMessage.textContent = loadMessage;
+      spinner(elem);
       const formData = new FormData(elem);
       let body = {};
       formData.forEach((value, key) => {
@@ -40,9 +99,13 @@ const sendForm = () => {
           if (respons.status !== 200) {
             throw new Error('Status network not 200');
           }
+          delSpinner();
+          elem.append(statusMessage);
           statusMessage.textContent = successMessage;
         })
         .catch((error) => {
+          delSpinner();
+          elem.append(statusMessage);
           statusMessage.textContent = errorMessage;
           // console.log(error);
         });
