@@ -16,7 +16,7 @@ const sendForm = () => {
 
   const spinner = (elem) => {
       loadMessage.classList.add('sk-flow');
-      elem.append(loadMessage);
+      elem.appendChild(loadMessage);
       loadMessage.innerHTML = `
         <div class="sk-flow-dot"></div>
         <div class="sk-flow-dot"></div>
@@ -63,7 +63,7 @@ const sendForm = () => {
               transform: scale(1);
             }
           }`;
-      document.head.append(styleLoadMsg);
+      document.head.appendChild(styleLoadMsg);
     };
 
     const delSpinner = () => {
@@ -100,12 +100,12 @@ const sendForm = () => {
             throw new Error('Status network not 200');
           }
           delSpinner();
-          elem.append(statusMessage);
+          elem.appendChild(statusMessage);
           statusMessage.textContent = successMessage;
         })
         .catch((error) => {
           delSpinner();
-          elem.append(statusMessage);
+          elem.appendChild(statusMessage);
           statusMessage.textContent = errorMessage;
           // console.log(error);
         });
