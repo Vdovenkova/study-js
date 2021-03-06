@@ -23,8 +23,8 @@ class SliderCarousel {
     this.options = {
       infinity,
       position,
-      widthSlide: Math.floor(100 / this.slidesToShow),
-      maxPosition: this.slides.length - this.slidesToShow
+      widthSlide: Math.floor(100 / this.slidesToShow)
+      // maxPosition: this.slides.length - this.slidesToShow
     };
     this.responsive = responsive;
   }
@@ -88,7 +88,8 @@ class SliderCarousel {
       --this.options.position;
       // console.log(this.options.position);
       if (this.options.position < 0){
-        this.options.position = this.options.maxPosition;
+        // this.options.position = this.options.maxPosition;
+        this.options.position = this.slides.length - this.slidesToShow;
       }
       this.wrap.style.transform = `
           translateX(${-this.options.position * this.options.widthSlide}%)`;
@@ -96,10 +97,10 @@ class SliderCarousel {
   }
 
   nextSlider(){
-    if (this.options.infinity || this.options.position < this.options.maxPosition){
+    if (this.options.infinity || this.options.position < (this.slides.length - this.slidesToShow)){
       ++this.options.position;
       // console.log(this.options.position);
-      if (this.options.position > this.options.maxPosition) {
+      if (this.options.position > (this.slides.length - this.slidesToShow)) {
         this.options.position = 0;
       }
       this.wrap.style.transform = `

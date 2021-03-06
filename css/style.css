@@ -346,12 +346,14 @@ main a {
 }
 .portfolio {
   padding: 5rem 0;
+  /* border: 1px solid green; */
 }
 .portfolio-content {
   position: relative;
   height: 775px;
   margin: 0 auto;
   display: block;
+  /* border: 1px solid blue; */
 }
 @media (max-width: 1024px) {
   .portfolio-content {
@@ -372,14 +374,16 @@ main a {
 .portfolio-item img {
   height: auto;
   width: 100%;
-  object-fit: cover;
   position: absolute;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  /* object-fit: cover; */
+  /* border: 1px solid red; */
 }
 .portfolio-item-active {
+  /* object-fit: cover; */
   opacity: 1;
   -webkit-transition: opacity 0.5s;
   transition: opacity 0.5s;

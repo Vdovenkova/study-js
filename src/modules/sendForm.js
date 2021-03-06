@@ -15,61 +15,61 @@ const sendForm = () => {
     color: #fff`;
 
   const spinner = (elem) => {
-      loadMessage.classList.add('sk-flow');
-      elem.appendChild(loadMessage);
-      loadMessage.innerHTML = `
-        <div class="sk-flow-dot"></div>
-        <div class="sk-flow-dot"></div>
-        <div class="sk-flow-dot"></div>`;
+    loadMessage.classList.add('sk-flow');
+    elem.appendChild(loadMessage);
+    loadMessage.innerHTML = `
+      <div class="sk-flow-dot"></div>
+      <div class="sk-flow-dot"></div>
+      <div class="sk-flow-dot"></div>`;
 
-      styleLoadMsg = document.createElement('style');
-      styleLoadMsg.textContent = `
-          :root {
-            --sk-color: rgb(250, 243, 243);
+    styleLoadMsg = document.createElement('style');
+    styleLoadMsg.textContent = `
+        :root {
+          --sk-color: rgb(250, 243, 243);
+        }
+
+        .sk-flow {
+          margin: auto;
+          width: 60px;
+          height: 35px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .sk-flow-dot {
+          width: 13px;
+          height: 13px;
+          background-color: var(--sk-color);
+          border-radius: 50%;
+          animation: sk-flow 1.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s infinite
+            both;
+        }
+
+        .sk-flow-dot:nth-child(1) {
+          animation-delay: -0.3s;
+        }
+        .sk-flow-dot:nth-child(2) {
+          animation-delay: -0.15s;
+        }
+
+        @keyframes sk-flow {
+          0%,
+          80%,
+          100% {
+            transform: scale(0.3);
           }
-
-          .sk-flow {
-            margin: auto;
-            width: 60px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+          40% {
+            transform: scale(1);
           }
+        }`;
+    document.head.appendChild(styleLoadMsg);
+  };
 
-          .sk-flow-dot {
-            width: 13px;
-            height: 13px;
-            background-color: var(--sk-color);
-            border-radius: 50%;
-            animation: sk-flow 1.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s infinite
-              both;
-          }
-
-          .sk-flow-dot:nth-child(1) {
-            animation-delay: -0.3s;
-          }
-          .sk-flow-dot:nth-child(2) {
-            animation-delay: -0.15s;
-          }
-
-          @keyframes sk-flow {
-            0%,
-            80%,
-            100% {
-              transform: scale(0.3);
-            }
-            40% {
-              transform: scale(1);
-            }
-          }`;
-      document.head.appendChild(styleLoadMsg);
-    };
-
-    const delSpinner = () => {
-      loadMessage.remove();
-      styleLoadMsg.remove();
-    };
+  const delSpinner = () => {
+    loadMessage.remove();
+    styleLoadMsg.remove();
+  };
 
   const postData = (body) => {
     return fetch('./server.php', {
